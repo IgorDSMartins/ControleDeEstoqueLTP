@@ -46,6 +46,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenuCadastro = new javax.swing.JMenu();
         jMenuCadastroFornecedor = new javax.swing.JMenuItem();
         jMenuCadastroProduto = new javax.swing.JMenuItem();
+        jMenu4 = new javax.swing.JMenu();
         jMenuVendas = new javax.swing.JMenu();
         jMenuVendasInserir = new javax.swing.JMenuItem();
         jMenuVendasAlterar = new javax.swing.JMenuItem();
@@ -54,9 +55,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenuItem7 = new javax.swing.JMenuItem();
         jMenuItem8 = new javax.swing.JMenuItem();
         jMenuItem9 = new javax.swing.JMenuItem();
-        jMenu4 = new javax.swing.JMenu();
-        jMenu9 = new javax.swing.JMenu();
-        jMenu5 = new javax.swing.JMenu();
         jMenuRelatorios = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
@@ -66,6 +64,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
+
+        jDesktopPane.setLayout(new javax.swing.OverlayLayout(jDesktopPane));
 
         jLabelPrincipal.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelPrincipal.setText("Sistema Gestão de Estoque - Copyright 2017");
@@ -82,6 +82,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenuCadastro.add(jMenuCadastroProduto);
 
         jMenuBar1.add(jMenuCadastro);
+
+        jMenu4.setText("Consulta");
+        jMenuBar1.add(jMenu4);
 
         jMenuVendas.setText("Vendas");
 
@@ -133,15 +136,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenuProdutos.add(jMenuItem9);
 
         jMenuBar1.add(jMenuProdutos);
-
-        jMenu4.setText("Consulta");
-        jMenuBar1.add(jMenu4);
-
-        jMenu9.setText("Entrada");
-        jMenuBar1.add(jMenu9);
-
-        jMenu5.setText("Saída");
-        jMenuBar1.add(jMenu5);
 
         jMenuRelatorios.setText("Relatórios");
 
@@ -284,10 +278,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JDesktopPane jDesktopPane;
     private javax.swing.JLabel jLabelPrincipal;
     private javax.swing.JMenu jMenu4;
-    private javax.swing.JMenu jMenu5;
     private javax.swing.JMenu jMenu7;
     private javax.swing.JMenu jMenu8;
-    private javax.swing.JMenu jMenu9;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenu jMenuCadastro;
     private javax.swing.JMenuItem jMenuCadastroFornecedor;
