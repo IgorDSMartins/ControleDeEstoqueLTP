@@ -2,6 +2,7 @@ package TelaPrincipal;
 
 
 import Ajuda.SobreInternalFrame;
+import BancoDeDados.DBConnection;
 import Cadastro.CadastroFornecedorInternalFrame;
 import Cadastro.CadastroProdutoInternalFrame;
 import Consulta.ConsultaInternalFrame;
@@ -13,6 +14,7 @@ import Relatorios.RelatoriosVendasInternalFrame;
 import Vendas.AlterarVendasInternalFrame;
 import Vendas.InserirVendasInternalFrame;
 import Vendas.RemoverVendasInternalFrame;
+import java.sql.Connection;
 import javax.swing.JInternalFrame;
 
 /*
@@ -58,7 +60,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
         atualInternalFrame = homeInternalFrame;
         jDesktopPane.add(atualInternalFrame);
         atualInternalFrame.setVisible(true);
-       
+        
+        DBConnection db = new DBConnection();
+        Connection conn = db.connect();
+        db.criarTabelas(conn);
+        
+        
         sobreInternalFrame = new SobreInternalFrame();
         
         cadastroFornecedorInternalFrame = new CadastroFornecedorInternalFrame();
