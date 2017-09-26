@@ -8,6 +8,8 @@ import Consulta.ConsultaInternalFrame;
 import Produtos.AlterarProdutoInternalFrame;
 import Produtos.InserirProdutoInternalFrame;
 import Produtos.RemoverProdutoInternalFrame;
+import Relatorios.RelatoriosProdutosInternalFrame;
+import Relatorios.RelatoriosVendasInternalFrame;
 import Vendas.AlterarVendasInternalFrame;
 import Vendas.InserirVendasInternalFrame;
 import Vendas.RemoverVendasInternalFrame;
@@ -42,9 +44,13 @@ public class TelaPrincipal extends javax.swing.JFrame {
         private AlterarProdutoInternalFrame alterarProdutoInternalFrame;
         private RemoverProdutoInternalFrame removerProdutoInternalFrame;
         
+        private RelatoriosProdutosInternalFrame relatoriosProdutosInternalFrame;
+        private RelatoriosVendasInternalFrame relatoriosVendasInternalFrame;
+        
     /**
      * Creates new form TelaPrincipal
      */
+        
     public TelaPrincipal() {
         initComponents();
         atualInternalFrame = new JInternalFrame();        
@@ -67,6 +73,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
         inserirProdutoInternalFrame = new InserirProdutoInternalFrame();
         alterarProdutoInternalFrame = new AlterarProdutoInternalFrame();
         removerProdutoInternalFrame = new RemoverProdutoInternalFrame();
+        
+        relatoriosProdutosInternalFrame = new RelatoriosProdutosInternalFrame();
+        relatoriosVendasInternalFrame = new RelatoriosVendasInternalFrame();
         
     }
     /**
@@ -108,8 +117,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenuProdutosAlterar = new javax.swing.JMenuItem();
         jMenuProdutosRemover = new javax.swing.JMenuItem();
         jMenuRelatorios = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuRelatoriosVendas = new javax.swing.JMenuItem();
+        jMenuRelatoriosProdutos = new javax.swing.JMenuItem();
         jMenuAjuda = new javax.swing.JMenu();
         jMenuAjudaSobre = new javax.swing.JMenuItem();
         jMenuSair = new javax.swing.JMenu();
@@ -216,21 +225,21 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jMenuRelatorios.setText("Relatórios");
 
-        jMenuItem1.setText("Vendas");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        jMenuRelatoriosVendas.setText("Vendas");
+        jMenuRelatoriosVendas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                jMenuRelatoriosVendasActionPerformed(evt);
             }
         });
-        jMenuRelatorios.add(jMenuItem1);
+        jMenuRelatorios.add(jMenuRelatoriosVendas);
 
-        jMenuItem2.setText("Produtos");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+        jMenuRelatoriosProdutos.setText("Produtos");
+        jMenuRelatoriosProdutos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
+                jMenuRelatoriosProdutosActionPerformed(evt);
             }
         });
-        jMenuRelatorios.add(jMenuItem2);
+        jMenuRelatorios.add(jMenuRelatoriosProdutos);
 
         jMenuBar1.add(jMenuRelatorios);
 
@@ -258,11 +267,13 @@ public class TelaPrincipal extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jDesktopPane)
                     .addComponent(jSeparator)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 385, Short.MAX_VALUE)
-                        .addComponent(jLabelPrincipal)))
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jLabelPrincipal))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jDesktopPane, javax.swing.GroupLayout.PREFERRED_SIZE, 553, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -308,21 +319,18 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void jMenuAjudaSobreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuAjudaSobreActionPerformed
         // TODO add your handling code here:
-        atualInternalFrame.setVisible(false);
-        jDesktopPane.remove(atualInternalFrame);
-        atualInternalFrame = sobreInternalFrame;
-        jDesktopPane.add(atualInternalFrame);
-        atualInternalFrame.setVisible(true);
-        
+        TrocaDeTela(sobreInternalFrame);
     }//GEN-LAST:event_jMenuAjudaSobreActionPerformed
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void jMenuRelatoriosVendasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuRelatoriosVendasActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+        TrocaDeTela(relatoriosVendasInternalFrame);
+    }//GEN-LAST:event_jMenuRelatoriosVendasActionPerformed
 
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+    private void jMenuRelatoriosProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuRelatoriosProdutosActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
+        TrocaDeTela(relatoriosProdutosInternalFrame);
+    }//GEN-LAST:event_jMenuRelatoriosProdutosActionPerformed
 
     private void jMenuHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuHomeActionPerformed
         // TODO add your handling code here:
@@ -395,13 +403,13 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuCadastroProduto;
     private javax.swing.JMenu jMenuConsulta;
     private javax.swing.JMenu jMenuHome;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenu jMenuProdutos;
     private javax.swing.JMenuItem jMenuProdutosAlterar;
     private javax.swing.JMenuItem jMenuProdutosInserir;
     private javax.swing.JMenuItem jMenuProdutosRemover;
     private javax.swing.JMenu jMenuRelatorios;
+    private javax.swing.JMenuItem jMenuRelatoriosProdutos;
+    private javax.swing.JMenuItem jMenuRelatoriosVendas;
     private javax.swing.JMenu jMenuSair;
     private javax.swing.JMenu jMenuVendas;
     private javax.swing.JMenuItem jMenuVendasAlterar;
