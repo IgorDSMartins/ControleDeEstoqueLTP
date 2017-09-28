@@ -49,6 +49,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
         private RelatoriosProdutosInternalFrame relatoriosProdutosInternalFrame;
         private RelatoriosVendasInternalFrame relatoriosVendasInternalFrame;
         
+        private Connection conn;
+        
     /**
      * Creates new form TelaPrincipal
      */
@@ -64,7 +66,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         atualInternalFrame.setVisible(true);
         
         DBConnection db = new DBConnection();
-        Connection conn = db.connect();
+        this.conn = db.connect();
         db.criarTabelas(conn);
         
         
@@ -79,8 +81,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
         alterarVendasInternalFrame = new AlterarVendasInternalFrame();
         removerVendasInternalFrame = new RemoverVendasInternalFrame();
         
-        inserirProdutoInternalFrame = new InserirProdutoInternalFrame();
-        alterarProdutoInternalFrame = new AlterarProdutoInternalFrame();
+        
+        
         removerProdutoInternalFrame = new RemoverProdutoInternalFrame();
         
         relatoriosProdutosInternalFrame = new RelatoriosProdutosInternalFrame();
@@ -318,6 +320,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void jMenuProdutosInserirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuProdutosInserirActionPerformed
         // TODO add your handling code here:
+        inserirProdutoInternalFrame = new InserirProdutoInternalFrame(conn);
         TrocaDeTela(inserirProdutoInternalFrame);
     }//GEN-LAST:event_jMenuProdutosInserirActionPerformed
 
@@ -348,6 +351,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void jMenuProdutosAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuProdutosAlterarActionPerformed
         // TODO add your handling code here:
+        alterarProdutoInternalFrame = new AlterarProdutoInternalFrame(conn);
         TrocaDeTela(alterarProdutoInternalFrame);
     }//GEN-LAST:event_jMenuProdutosAlterarActionPerformed
 
