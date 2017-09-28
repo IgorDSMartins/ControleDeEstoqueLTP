@@ -54,7 +54,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
      */
         
     public TelaPrincipal() {
+        
         initComponents();
+        
         atualInternalFrame = new JInternalFrame();        
         homeInternalFrame = new HomeInternalFrame();
         atualInternalFrame = homeInternalFrame;
@@ -69,7 +71,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         sobreInternalFrame = new SobreInternalFrame();
         
         cadastroFornecedorInternalFrame = new CadastroFornecedorInternalFrame();
-        cadastroProdutoInternalFrame = new CadastroProdutoInternalFrame();
+        
         
         consultaInternalFrame = new ConsultaInternalFrame();
         
@@ -86,7 +88,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         
     }
     /**
-     * Recebe o novo JInternalFrame e atualiza a tela
+     * Métodos recebe o novo JInternalFrame e atualiza a tela
      * @param novo 
      */
     public void TrocaDeTela(JInternalFrame novo) {
@@ -361,6 +363,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void jMenuCadastroProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuCadastroProdutoActionPerformed
         // TODO add your handling code here:
+        cadastroProdutoInternalFrame = new CadastroProdutoInternalFrame();
         TrocaDeTela(cadastroProdutoInternalFrame);
     }//GEN-LAST:event_jMenuCadastroProdutoActionPerformed
 
