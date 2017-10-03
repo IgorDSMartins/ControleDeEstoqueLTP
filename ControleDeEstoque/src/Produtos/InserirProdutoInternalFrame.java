@@ -5,7 +5,6 @@
  */
 package Produtos;
 
-import Cadastro.Produto;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -27,16 +26,17 @@ public class InserirProdutoInternalFrame extends javax.swing.JInternalFrame {
     public InserirProdutoInternalFrame(Connection conn) {
         initComponents();
         this.conn = conn;
-        populaComboBox(conn);
+        populaDados(conn);
     }
     
-        /**
-     * Método que seleciona os Produtos e popula o ComboBox
+     
+              /**
+     * Método que seleciona os Produtos e popula a Interface
      * @param conn 
      */
-     public void populaComboBox (Connection conn) {
+     public void populaDados (Connection conn) {
         
-        String sql = "SELECT nome "
+        String sql = "SELECT codigo "
                      + "FROM produto;";
         
         try {
@@ -44,19 +44,62 @@ public class InserirProdutoInternalFrame extends javax.swing.JInternalFrame {
             Statement comandoSql = conn.createStatement();
             
             ResultSet rs  = comandoSql.executeQuery(sql);
-            
+                      
             while(rs.next()) {
-                jComboBoxProduto.addItem(rs.getString("nome"));
+                jComboBoxProduto.addItem(rs.getString("codigo"));
             }
             
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }  
     }
-
-
     
-     
+     public void atualizaSelecao (Connection conn,int cod) {
+         
+         String sql = "SELECT nome,fornecedor "
+                     + "FROM produto WHERE codigo = ?;";
+        
+        try {
+            
+            PreparedStatement pstmt = conn.prepareStatement(sql); 
+                
+            pstmt.setInt(1, cod);
+            
+            ResultSet rs  = pstmt.executeQuery();
+            
+            if (rs != null){
+                jLabelNome.setText(rs.getString("nome"));
+                jLabelFornecedor.setText(rs.getString("fornecedor"));
+            }           
+            
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }  
+     }
+ 
+          
+              /**
+      * Método que atualiza Produtos no Banco de Dados
+      * @param conn
+     * @param cod
+      * @param produto 
+      */
+     public void insereProduto (Connection conn,int cod) {
+        String sql = "UPDATE produto SET quantidade = (quantidade + ?)  WHERE codigo = ?";
+ 
+        try {
+                PreparedStatement pstmt = conn.prepareStatement(sql); 
+                
+                pstmt.setInt(1, Integer.parseInt(jTextFieldQuantidade.getText()));
+                pstmt.setInt(2, cod);
+                
+                pstmt.executeUpdate();
+                
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
      
     /**
      * This method is called from within the constructor to initialize the form.
@@ -73,12 +116,22 @@ public class InserirProdutoInternalFrame extends javax.swing.JInternalFrame {
         jLabel3 = new javax.swing.JLabel();
         jTextFieldQuantidade = new javax.swing.JTextField();
         jButtonInserir = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabelFornecedor = new javax.swing.JLabel();
+        jLabelNome = new javax.swing.JLabel();
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel1.setText("Inserir Produto");
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel2.setText("Produto:");
+
+        jComboBoxProduto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxProdutoActionPerformed(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel3.setText("Quantidade:");
@@ -97,20 +150,18 @@ public class InserirProdutoInternalFrame extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel5.setText("Nome:");
+
+        jLabel6.setText("Fornecedor:");
+
+        jLabelFornecedor.setText("jLabel11");
+
+        jLabelNome.setText("jLabel10");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jComboBoxProduto, 0, 110, Short.MAX_VALUE)
-                    .addComponent(jTextFieldQuantidade))
-                .addContainerGap(196, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 144, Short.MAX_VALUE)
                 .addComponent(jLabel1)
@@ -119,6 +170,28 @@ public class InserirProdutoInternalFrame extends javax.swing.JInternalFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButtonInserir)
                 .addGap(145, 145, 145))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextFieldQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabelFornecedor))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel5))
+                        .addGap(27, 27, 27)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addComponent(jLabelNome))
+                            .addComponent(jComboBoxProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -129,11 +202,19 @@ public class InserirProdutoInternalFrame extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jComboBoxProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabelNome))
                 .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabelFornecedor))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(jTextFieldQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 140, Short.MAX_VALUE)
+                .addGap(75, 75, 75)
                 .addComponent(jButtonInserir)
                 .addContainerGap())
         );
@@ -147,9 +228,16 @@ public class InserirProdutoInternalFrame extends javax.swing.JInternalFrame {
 
     private void jButtonInserirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonInserirActionPerformed
         // TODO add your handling code here:
-        
+        int cod = Integer.parseInt(jComboBoxProduto.getSelectedItem().toString());
+        insereProduto(conn,cod);
         
     }//GEN-LAST:event_jButtonInserirActionPerformed
+
+    private void jComboBoxProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxProdutoActionPerformed
+        // TODO add your handling code here:
+        int cod = Integer.parseInt(jComboBoxProduto.getSelectedItem().toString());
+        atualizaSelecao(conn,cod);
+    }//GEN-LAST:event_jComboBoxProdutoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -158,6 +246,10 @@ public class InserirProdutoInternalFrame extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabelFornecedor;
+    private javax.swing.JLabel jLabelNome;
     private javax.swing.JTextField jTextFieldQuantidade;
     // End of variables declaration//GEN-END:variables
 }

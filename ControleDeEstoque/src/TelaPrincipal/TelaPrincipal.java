@@ -81,10 +81,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
         alterarVendasInternalFrame = new AlterarVendasInternalFrame();
         removerVendasInternalFrame = new RemoverVendasInternalFrame();
         
-        
-        
-        removerProdutoInternalFrame = new RemoverProdutoInternalFrame();
-        
         relatoriosProdutosInternalFrame = new RelatoriosProdutosInternalFrame();
         relatoriosVendasInternalFrame = new RelatoriosVendasInternalFrame();
         
@@ -135,7 +131,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenuSair = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setResizable(false);
+        setTitle("Principal");
 
         jDesktopPane.setLayout(new javax.swing.OverlayLayout(jDesktopPane));
 
@@ -267,6 +263,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenuBar1.add(jMenuAjuda);
 
         jMenuSair.setText("Sair");
+        jMenuSair.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuSairActionPerformed(evt);
+            }
+        });
         jMenuBar1.add(jMenuSair);
 
         setJMenuBar(jMenuBar1);
@@ -326,6 +327,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void jMenuProdutosRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuProdutosRemoverActionPerformed
         // TODO add your handling code here:
+        removerProdutoInternalFrame = new RemoverProdutoInternalFrame(conn);
         TrocaDeTela(removerProdutoInternalFrame);
     }//GEN-LAST:event_jMenuProdutosRemoverActionPerformed
 
@@ -370,6 +372,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
         cadastroProdutoInternalFrame = new CadastroProdutoInternalFrame();
         TrocaDeTela(cadastroProdutoInternalFrame);
     }//GEN-LAST:event_jMenuCadastroProdutoActionPerformed
+
+    private void jMenuSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuSairActionPerformed
+        // TODO add your handling code here:
+        System.exit(0);
+    }//GEN-LAST:event_jMenuSairActionPerformed
 
     /**
      * @param args the command line arguments

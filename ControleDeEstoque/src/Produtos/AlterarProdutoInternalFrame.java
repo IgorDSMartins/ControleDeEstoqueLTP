@@ -131,7 +131,7 @@ public class AlterarProdutoInternalFrame extends javax.swing.JInternalFrame {
         jLabel1.setText("Alterar Produto");
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel2.setText("Produto:");
+        jLabel2.setText("Código:");
 
         jComboBoxProduto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
