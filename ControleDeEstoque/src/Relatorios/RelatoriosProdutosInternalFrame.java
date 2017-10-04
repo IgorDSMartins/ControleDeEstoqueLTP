@@ -5,19 +5,75 @@
  */
 package Relatorios;
 
+import Cadastro.Produto;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author juanfelipevillalba
  */
 public class RelatoriosProdutosInternalFrame extends javax.swing.JInternalFrame {
 
+    private final Connection conn;
+
     /**
      * Creates new form RelatoriosProdutosInternalFrame
+     * @param conn
      */
-    public RelatoriosProdutosInternalFrame() {
+    public RelatoriosProdutosInternalFrame(Connection conn) {
         initComponents();
+        this.conn = conn;
+        showJTable();
     }
+    
+    public ArrayList<Produto> getProdutosList(Connection conn) {
+        ArrayList<Produto> listaProdutos = new ArrayList<>();
+        
+        String sql = "SELECT * FROM produto";
 
+        
+        try {
+            
+            Statement comandoSql = conn.createStatement();
+            ResultSet rs  = comandoSql.executeQuery(sql);
+            
+            
+            while(rs.next()) {
+                
+                Produto produto = new Produto(rs.getInt("codigo"),rs.getString("nome"),
+                        rs.getString("fornecedor"),rs.getInt("preco"),rs.getInt("quantidade"));
+                listaProdutos.add(produto);
+            }
+            
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        
+        return listaProdutos;
+    }
+    
+
+    public void showJTable() {
+        ArrayList<Produto> list = getProdutosList(conn);
+        DefaultTableModel model = (DefaultTableModel) jTableProduto.getModel();
+        Object[] row = new Object[5];
+        for (int i = 0; i < list.size(); i++) {
+            row[0] = list.get(i).getCodigo();
+            row[1] = list.get(i).getNome();
+            row[2] = list.get(i).getFornecedor();
+            row[3] = list.get(i).getPreco();
+            row[4] = list.get(i).getQuantidade();
+                       
+            model.addRow(row);
+            
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -28,44 +84,29 @@ public class RelatoriosProdutosInternalFrame extends javax.swing.JInternalFrame 
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTableProduto = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTableProduto.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+
             },
             new String [] {
-                "Cd. de Barras", "Nome", "Quantidade"
+                "Cd. de Barras", "Nome", "Fornecedor", "Preço", "Quantidade"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Object.class, java.lang.Integer.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class
             };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setResizable(false);
-            jTable1.getColumnModel().getColumn(1).setResizable(false);
+        jScrollPane1.setViewportView(jTableProduto);
+        if (jTableProduto.getColumnModel().getColumnCount() > 0) {
+            jTableProduto.getColumnModel().getColumn(0).setResizable(false);
+            jTableProduto.getColumnModel().getColumn(1).setResizable(false);
         }
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -86,8 +127,9 @@ public class RelatoriosProdutosInternalFrame extends javax.swing.JInternalFrame 
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addGap(28, 28, 28)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE))
+                .addGap(22, 22, 22)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -97,6 +139,6 @@ public class RelatoriosProdutosInternalFrame extends javax.swing.JInternalFrame 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTableProduto;
     // End of variables declaration//GEN-END:variables
 }

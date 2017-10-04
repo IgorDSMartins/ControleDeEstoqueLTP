@@ -5,7 +5,6 @@
  */
 package Cadastro;
 
-import BancoDeDados.DBConnection;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -16,11 +15,15 @@ import java.sql.SQLException;
  */
 public class CadastroFornecedorInternalFrame extends javax.swing.JInternalFrame {
 
+    private final Connection conn;
+
     /**
      * Creates new form CadastroFornecedorInternalFrame
+     * @param conn
      */
-    public CadastroFornecedorInternalFrame() {
+    public CadastroFornecedorInternalFrame(Connection conn) {
         initComponents();
+        this.conn = conn;
     }
     
     /**
@@ -134,11 +137,10 @@ public class CadastroFornecedorInternalFrame extends javax.swing.JInternalFrame 
     private void jButtonAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAdicionarActionPerformed
         // TODO add your handling code here:
             Fornecedor fornecedor = new Fornecedor();
+            
             fornecedor.setCnpj(jTextFieldCNPJ.getText());
             fornecedor.setNome(jTextFieldNome.getText());
             
-            DBConnection db = new DBConnection();
-            Connection conn = db.connect();
             cadastroFornecedor(conn, fornecedor);
             
     }//GEN-LAST:event_jButtonAdicionarActionPerformed

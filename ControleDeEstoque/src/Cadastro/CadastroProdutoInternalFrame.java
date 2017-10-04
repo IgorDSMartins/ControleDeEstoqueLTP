@@ -5,7 +5,6 @@
  */
 package Cadastro;
 
-import BancoDeDados.DBConnection;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,14 +16,17 @@ import java.sql.Statement;
  * @author juanfelipevillalba
  */
 public class CadastroProdutoInternalFrame extends javax.swing.JInternalFrame {
-    private DBConnection db = new DBConnection();
-    private Connection conn = db.connect();
+
+    private final Connection conn;
+
 
     /**
      * Creates new form CadastroProdutoInternalFrame
+     * @param conn
      */
-    public CadastroProdutoInternalFrame() {
+    public CadastroProdutoInternalFrame(Connection conn) {
         initComponents();
+        this.conn = conn;
         this.selecionaFornecedores(conn);
         
                     
@@ -114,7 +116,7 @@ public class CadastroProdutoInternalFrame extends javax.swing.JInternalFrame {
         });
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel3.setText("Cod. Barras:");
+        jLabel3.setText("Cod. de Barras:");
 
         jTextFieldCodigo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -160,13 +162,13 @@ public class CadastroProdutoInternalFrame extends javax.swing.JInternalFrame {
                                     .addComponent(jLabel4)
                                     .addComponent(jLabel5)
                                     .addComponent(jLabel6))
-                                .addGap(45, 45, 45)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jComboBoxFornecedor, 0, 153, Short.MAX_VALUE)
-                                    .addComponent(jTextFieldQuantidade)
-                                    .addComponent(jTextFieldPreco))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jComboBoxFornecedor, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jTextFieldQuantidade, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jTextFieldPreco, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap(106, Short.MAX_VALUE))
+                .addContainerGap(87, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 150, Short.MAX_VALUE)
                 .addComponent(jButtonAdicionar)
@@ -219,12 +221,8 @@ public class CadastroProdutoInternalFrame extends javax.swing.JInternalFrame {
         int preco = Integer.parseInt(jTextFieldPreco.getText());
         int quantidade = Integer.parseInt(jTextFieldQuantidade.getText());
         
-        Produto produto =  new Produto();
-        produto.setCodigo(cod);
-        produto.setNome(jTextFieldNome.getText());
-        produto.setFornecedor(jComboBoxFornecedor.getSelectedItem().toString());
-        produto.setPreco(preco);
-        produto.setQuantidade(quantidade);
+        Produto produto =  new Produto(cod,jTextFieldNome.getText(),
+                jComboBoxFornecedor.getSelectedItem().toString(),preco,quantidade);
         
         cadastroProduto(conn,produto);
     }//GEN-LAST:event_jButtonAdicionarActionPerformed

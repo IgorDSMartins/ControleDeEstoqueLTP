@@ -82,8 +82,7 @@ public class AlterarProdutoInternalFrame extends javax.swing.JInternalFrame {
               /**
       * Método que atualiza Produtos no Banco de Dados
       * @param conn
-     * @param cod
-      * @param produto 
+     * @param cod 
       */
      public void atualizaProduto (Connection conn,int cod) {
         String sql = "UPDATE produto SET preco = ? , quantidade = ?  WHERE codigo = ?";

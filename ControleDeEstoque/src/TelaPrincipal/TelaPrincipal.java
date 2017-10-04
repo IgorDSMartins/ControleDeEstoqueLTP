@@ -72,16 +72,13 @@ public class TelaPrincipal extends javax.swing.JFrame {
         
         sobreInternalFrame = new SobreInternalFrame();
         
-        cadastroFornecedorInternalFrame = new CadastroFornecedorInternalFrame();
-        
-        
         consultaInternalFrame = new ConsultaInternalFrame();
         
         inserirVendasInternalFrame = new InserirVendasInternalFrame();
         alterarVendasInternalFrame = new AlterarVendasInternalFrame();
         removerVendasInternalFrame = new RemoverVendasInternalFrame();
         
-        relatoriosProdutosInternalFrame = new RelatoriosProdutosInternalFrame();
+        
         relatoriosVendasInternalFrame = new RelatoriosVendasInternalFrame();
         
     }
@@ -343,6 +340,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void jMenuRelatoriosProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuRelatoriosProdutosActionPerformed
         // TODO add your handling code here:
+        relatoriosProdutosInternalFrame = new RelatoriosProdutosInternalFrame(conn);
         TrocaDeTela(relatoriosProdutosInternalFrame);
     }//GEN-LAST:event_jMenuRelatoriosProdutosActionPerformed
 
@@ -364,12 +362,13 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void jMenuCadastroFornecedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuCadastroFornecedorActionPerformed
         // TODO add your handling code here:
+        cadastroFornecedorInternalFrame = new CadastroFornecedorInternalFrame(conn);
         TrocaDeTela(cadastroFornecedorInternalFrame);
     }//GEN-LAST:event_jMenuCadastroFornecedorActionPerformed
 
     private void jMenuCadastroProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuCadastroProdutoActionPerformed
         // TODO add your handling code here:
-        cadastroProdutoInternalFrame = new CadastroProdutoInternalFrame();
+        cadastroProdutoInternalFrame = new CadastroProdutoInternalFrame(conn);
         TrocaDeTela(cadastroProdutoInternalFrame);
     }//GEN-LAST:event_jMenuCadastroProdutoActionPerformed
 
