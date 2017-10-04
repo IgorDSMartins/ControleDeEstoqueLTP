@@ -17,10 +17,10 @@ import java.sql.Statement;
  */
 public class RemoverProdutoInternalFrame extends javax.swing.JInternalFrame {
     
-    private Connection conn;
-    private String comboAtual;
+    private final Connection conn;
     /**
      * Creates new form RemoverProdutoInternalFrame
+     * @param conn
      */
     public RemoverProdutoInternalFrame(Connection conn) {
         initComponents();

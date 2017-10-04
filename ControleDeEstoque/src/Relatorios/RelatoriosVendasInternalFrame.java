@@ -5,7 +5,6 @@
  */
 package Relatorios;
 
-import Cadastro.Produto;
 import Vendas.Venda;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -46,8 +45,8 @@ public class RelatoriosVendasInternalFrame extends javax.swing.JInternalFrame {
             
             while(rs.next()) {
                 
-                Venda venda = new Venda(rs.getInt("cod"),rs.getString("produto"),
-                        rs.getString("fornecedor"),rs.getInt("quantidade"),rs.getInt("valorTotal"));
+                Venda venda = new Venda(rs.getInt("codigo"),rs.getString("produto"),
+                        rs.getString("fornecedor"),rs.getInt("quantidade"));
                 listaVendas.add(venda);
             }
             
@@ -94,11 +93,11 @@ public class RelatoriosVendasInternalFrame extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Código", "Nome do Produto", "Fornecedor", "Quantidade", "Valor Total"
+                "Código", "Nome do Produto", "Fornecedor", "Quantidade"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
             };
 
             public Class getColumnClass(int columnIndex) {

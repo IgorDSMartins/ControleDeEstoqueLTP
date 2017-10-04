@@ -74,7 +74,7 @@ public class InserirVendasInternalFrame extends javax.swing.JInternalFrame {
      }
     
     public void inserirVenda (Connection conn,Venda venda) {
-        String sql = "INSERT INTO venda (produto,fornecedor,quantidade,valorTotal) VALUES(?,?,?,?)";
+        String sql = "INSERT INTO venda (produto,fornecedor,quantidade) VALUES(?,?,?)";
  
         try {
                 PreparedStatement pstmt = conn.prepareStatement(sql); 
@@ -83,7 +83,7 @@ public class InserirVendasInternalFrame extends javax.swing.JInternalFrame {
                 pstmt.setString(1, venda.getNomeProduto());
                 pstmt.setString(2, venda.getFornecedor());
                 pstmt.setInt(3, venda.getQuantidade());
-                pstmt.setInt(4, venda.getValorTotal());
+                //pstmt.setInt(4, venda.getValorTotal());
                 
                 pstmt.executeUpdate();
                 
@@ -240,7 +240,7 @@ public class InserirVendasInternalFrame extends javax.swing.JInternalFrame {
         int quantidade = Integer.parseInt(jTextFieldQuantidade.getText());
         
         Venda venda =  new Venda(jLabelNome.getText(),
-                jLabelFornecedor.getText(),quantidade,0);
+                jLabelFornecedor.getText(),quantidade);
         
         inserirVenda(conn,venda);
     }//GEN-LAST:event_jButtonInserirActionPerformed

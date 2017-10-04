@@ -17,19 +17,19 @@ public class Venda {
     private int quantidade;
     private int valorTotal;
     
-    public Venda(String nomeProduto,String fornecedor,int quantidade,int valorTotal) {
+    public Venda(String nomeProduto,String fornecedor,int quantidade) {
         this.nomeProduto = nomeProduto;
         this.fornecedor = fornecedor;
         this.quantidade = quantidade;
-        this.valorTotal = valorTotal;
+        //this.valorTotal = valorTotal;
     }
     
-    public Venda(int codigo,String nomeProduto,String fornecedor,int quantidade,int valorTotal) {
+    public Venda(int codigo,String nomeProduto,String fornecedor,int quantidade) {
         this.codigo = codigo;
         this.nomeProduto = nomeProduto;
         this.fornecedor = fornecedor;
         this.quantidade = quantidade;
-        this.valorTotal = valorTotal;
+        //this.valorTotal = valorTotal;
     }
 
     /**

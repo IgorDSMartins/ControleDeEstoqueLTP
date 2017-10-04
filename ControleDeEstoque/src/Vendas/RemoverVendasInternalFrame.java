@@ -5,18 +5,100 @@
  */
 package Vendas;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 /**
  *
  * @author Pichau
  */
 public class RemoverVendasInternalFrame extends javax.swing.JInternalFrame {
 
+    private final Connection conn;
+
     /**
      * Creates new form RemoverVendasInternalFrame
+     * @param conn
      */
-    public RemoverVendasInternalFrame() {
+    public RemoverVendasInternalFrame(Connection conn) {
         initComponents();
+        this.conn = conn;
+        populaDados(conn);
     }
+    
+        
+              /**
+     * Método que seleciona os Produtos e popula a Interface
+     * @param conn 
+     */
+     public void populaDados (Connection conn) {
+        
+        String sql = "SELECT codigo "
+                     + "FROM venda;";
+        
+        try {
+            
+            Statement comandoSql = conn.createStatement();
+            
+            ResultSet rs  = comandoSql.executeQuery(sql);
+                      
+            while(rs.next()) {
+                jComboBoxVenda.addItem(rs.getString("codigo"));
+            }
+            
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }  
+    }
+    
+     public void atualizaSelecao (Connection conn,int cod) {
+         
+         String sql = "SELECT produto,fornecedor,quantidade "
+                     + "FROM venda WHERE codigo = ?;";
+        
+        try {
+            
+            PreparedStatement pstmt = conn.prepareStatement(sql); 
+                
+            pstmt.setInt(1, cod);
+            
+            ResultSet rs  = pstmt.executeQuery();
+            
+            if (rs != null){
+                jLabelNome.setText(rs.getString("produto"));
+                jLabelFornecedor.setText(rs.getString("fornecedor"));
+                jLabelQuantidade.setText(rs.getString("quantidade"));
+            }           
+            
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }  
+     }
+     
+              /**
+      * Método que atualiza Produtos no Banco de Dados
+      * @param conn
+     * @param cod
+      * @param produto 
+      */
+     public void removeVenda (Connection conn,int cod) {
+        String sql = "DELETE FROM venda WHERE codigo = ?";
+ 
+        try {
+                PreparedStatement pstmt = conn.prepareStatement(sql); 
+                
+                pstmt.setInt(1, cod);
+                
+                pstmt.executeUpdate();
+                
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -29,23 +111,45 @@ public class RemoverVendasInternalFrame extends javax.swing.JInternalFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jButton1 = new javax.swing.JButton();
+        jComboBoxVenda = new javax.swing.JComboBox<>();
+        jButtonRemover = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        jLabelNome = new javax.swing.JLabel();
+        jLabelFornecedor = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabelQuantidade = new javax.swing.JLabel();
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel1.setText("Remover Venda");
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel2.setText("N. da venda:");
+        jLabel2.setText("Código:");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        jButton1.setText("Remover");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jComboBoxVenda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jComboBoxVendaActionPerformed(evt);
             }
         });
+
+        jButtonRemover.setText("Remover");
+        jButtonRemover.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonRemoverActionPerformed(evt);
+            }
+        });
+
+        jLabel5.setText("Nome:");
+
+        jLabelNome.setText("jLabel10");
+
+        jLabelFornecedor.setText("jLabel11");
+
+        jLabel6.setText("Fornecedor:");
+
+        jLabel7.setText("Quantidade");
+
+        jLabelQuantidade.setText("jLabel11");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -54,15 +158,32 @@ public class RemoverVendasInternalFrame extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(138, 138, 138)
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel2)
-                        .addGap(66, 66, 66)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton1)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(73, 73, 73)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jButtonRemover)
+                            .addComponent(jComboBoxVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(138, 138, 138)
-                        .addComponent(jLabel1)))
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(174, 174, 174)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabelNome)
+                                    .addComponent(jLabelFornecedor)))
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel6)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(174, 174, 174)
+                                .addComponent(jLabelQuantidade))
+                            .addComponent(jLabel7))))
                 .addContainerGap(141, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -73,24 +194,50 @@ public class RemoverVendasInternalFrame extends javax.swing.JInternalFrame {
                 .addGap(53, 53, 53)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 143, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                    .addComponent(jComboBoxVenda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabelNome))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabelFornecedor))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(jLabelQuantidade))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
+                .addComponent(jButtonRemover)
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jButtonRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRemoverActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+        int cod = Integer.parseInt(jComboBoxVenda.getSelectedItem().toString());
+        removeVenda(conn,cod);
+    }//GEN-LAST:event_jButtonRemoverActionPerformed
+
+    private void jComboBoxVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxVendaActionPerformed
+        // TODO add your handling code here:
+        int cod = Integer.parseInt(jComboBoxVenda.getSelectedItem().toString());
+        atualizaSelecao(conn,cod);    
+    }//GEN-LAST:event_jComboBoxVendaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JButton jButtonRemover;
+    private javax.swing.JComboBox<String> jComboBoxVenda;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabelFornecedor;
+    private javax.swing.JLabel jLabelNome;
+    private javax.swing.JLabel jLabelQuantidade;
     // End of variables declaration//GEN-END:variables
 }

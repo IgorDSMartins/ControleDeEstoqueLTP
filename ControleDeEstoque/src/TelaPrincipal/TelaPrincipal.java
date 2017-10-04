@@ -69,18 +69,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
         this.conn = db.connect();
         db.criarTabelas(conn);
         
-        
-        sobreInternalFrame = new SobreInternalFrame();
-        
+        sobreInternalFrame = new SobreInternalFrame();       
         consultaInternalFrame = new ConsultaInternalFrame();
-        
-        
-        alterarVendasInternalFrame = new AlterarVendasInternalFrame();
-        removerVendasInternalFrame = new RemoverVendasInternalFrame();
-        
-        
-        
-        
+          
     }
     /**
      * Métodos recebe o novo JInternalFrame e atualiza a tela
@@ -309,11 +300,13 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void jMenuVendasAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuVendasAlterarActionPerformed
         // TODO add your handling code here:
+        alterarVendasInternalFrame = new AlterarVendasInternalFrame(conn);
         TrocaDeTela(alterarVendasInternalFrame);
     }//GEN-LAST:event_jMenuVendasAlterarActionPerformed
 
     private void jMenuVendasRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuVendasRemoverActionPerformed
         // TODO add your handling code here:
+        removerVendasInternalFrame = new RemoverVendasInternalFrame(conn);
         TrocaDeTela(removerVendasInternalFrame);
     }//GEN-LAST:event_jMenuVendasRemoverActionPerformed
 
