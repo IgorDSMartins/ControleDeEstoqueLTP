@@ -74,12 +74,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
         
         consultaInternalFrame = new ConsultaInternalFrame();
         
-        inserirVendasInternalFrame = new InserirVendasInternalFrame();
+        
         alterarVendasInternalFrame = new AlterarVendasInternalFrame();
         removerVendasInternalFrame = new RemoverVendasInternalFrame();
         
         
-        relatoriosVendasInternalFrame = new RelatoriosVendasInternalFrame();
+        
         
     }
     /**
@@ -303,6 +303,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void jMenuVendasInserirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuVendasInserirActionPerformed
         // TODO add your handling code here:
+        inserirVendasInternalFrame = new InserirVendasInternalFrame(conn);
         TrocaDeTela(inserirVendasInternalFrame);
     }//GEN-LAST:event_jMenuVendasInserirActionPerformed
 
@@ -335,6 +336,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void jMenuRelatoriosVendasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuRelatoriosVendasActionPerformed
         // TODO add your handling code here:
+        relatoriosVendasInternalFrame = new RelatoriosVendasInternalFrame(conn);
         TrocaDeTela(relatoriosVendasInternalFrame);
     }//GEN-LAST:event_jMenuRelatoriosVendasActionPerformed
 
