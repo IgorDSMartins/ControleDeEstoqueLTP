@@ -155,12 +155,6 @@ public class AlterarProdutoInternalFrame extends javax.swing.JInternalFrame {
 
         jLabel8.setText("Quantidade:");
 
-        jLabelCodigo.setText("jLabel9");
-
-        jLabelNome.setText("jLabel10");
-
-        jLabelFornecedor.setText("jLabel11");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(

@@ -160,14 +160,8 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabelFornecedor">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="jLabel11"/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabelNome">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="jLabel10"/>
-      </Properties>
     </Component>
   </SubComponents>
 </Form>

@@ -5,11 +5,13 @@
  */
 package Vendas;
 
+import java.beans.PropertyVetoException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -18,7 +20,7 @@ import java.sql.Statement;
 public class AlterarVendasInternalFrame extends javax.swing.JInternalFrame {
 
     private final Connection conn;
-
+    private int quantidadeInicial;
     /**
      * Creates new form AlterarVendasInternalFrame
      * @param conn
@@ -68,9 +70,10 @@ public class AlterarVendasInternalFrame extends javax.swing.JInternalFrame {
             ResultSet rs  = pstmt.executeQuery();
             
             if (rs != null){
-                jLabelProduto.setText(rs.getString("produto"));
+                jLabelProduto.setText(rs.getString("id_produto"));
                 jLabelFornecedor.setText(rs.getString("fornecedor"));
                 jTextFieldQuantidade.setText(Integer.toString(rs.getInt("quantidade")));
+                quantidadeInicial = rs.getInt("quantidade");
             }           
             
         } catch (SQLException e) {
@@ -98,7 +101,34 @@ public class AlterarVendasInternalFrame extends javax.swing.JInternalFrame {
             System.out.println(e.getMessage());
         }
     }
+     
+    public void atualizaProduto (Connection conn,int cod,int qtd) {
+        String sql = "UPDATE produto SET quantidade = quantidade + ?  WHERE codigo = ?";
+ 
+        try {
+                PreparedStatement pstmt = conn.prepareStatement(sql); 
+                
+                pstmt.setInt(1, qtd);
+                pstmt.setInt(2, cod);
+                
+                pstmt.executeUpdate();
+                
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
 
+    public void mensagem (String mensagem) {
+        JOptionPane.showMessageDialog(null,mensagem);
+    } 
+        
+    public void close(){
+        try {
+                this.setClosed(true);
+                } catch (PropertyVetoException ex) {
+                    System.err.println("Closing Exception");
+            }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -144,10 +174,6 @@ public class AlterarVendasInternalFrame extends javax.swing.JInternalFrame {
         jLabel4.setText("Produto:");
 
         jLabel5.setText("Fornecedor:");
-
-        jLabelFornecedor.setText("jLabel6");
-
-        jLabelProduto.setText("jLabel7");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -217,7 +243,15 @@ public class AlterarVendasInternalFrame extends javax.swing.JInternalFrame {
     private void jButtonAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAlterarActionPerformed
         // TODO add your handling code here:
         int cod = Integer.parseInt(jComboBoxVenda.getSelectedItem().toString());
-        atualizaVenda(conn,cod);
+        int codProduto = Integer.parseInt(jLabelProduto.getText());
+        int quantidade = Integer.parseInt(jTextFieldQuantidade.getText());
+        if (quantidade <= quantidadeInicial) {
+            atualizaProduto(conn,codProduto,(quantidadeInicial - quantidade));
+            atualizaVenda(conn,cod);
+            mensagem("Venda Atualizada.");
+            close();
+        }
+        
     }//GEN-LAST:event_jButtonAlterarActionPerformed
 
     private void jComboBoxVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxVendaActionPerformed

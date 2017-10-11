@@ -70,7 +70,7 @@ public class DBConnection {
         
         String sql3 = "CREATE TABLE IF NOT EXISTS venda (";
                 sql3 += "	codigo integer PRIMARY KEY NOT NULL,";
-                sql3 += "	produto text NOT NULL,";
+                sql3 += "	id_produto integer NOT NULL,";
                 sql3 += "	fornecedor text NOT NULL,";
                 sql3 += "	quantidade integer NOT NULL";
                 sql3 += ");";

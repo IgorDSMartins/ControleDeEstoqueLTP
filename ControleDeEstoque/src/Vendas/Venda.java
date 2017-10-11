@@ -12,21 +12,21 @@ package Vendas;
 public class Venda {
     
     private int codigo;
-    private String nomeProduto;
+    private int idProduto;
     private String fornecedor;
     private int quantidade;
     private int valorTotal;
     
-    public Venda(String nomeProduto,String fornecedor,int quantidade) {
-        this.nomeProduto = nomeProduto;
+    public Venda(int idProduto,String fornecedor,int quantidade) {
+        this.idProduto = idProduto;
         this.fornecedor = fornecedor;
         this.quantidade = quantidade;
         //this.valorTotal = valorTotal;
     }
     
-    public Venda(int codigo,String nomeProduto,String fornecedor,int quantidade) {
+    public Venda(int codigo,int idProduto,String fornecedor,int quantidade) {
         this.codigo = codigo;
-        this.nomeProduto = nomeProduto;
+        this.idProduto = idProduto;
         this.fornecedor = fornecedor;
         this.quantidade = quantidade;
         //this.valorTotal = valorTotal;
@@ -47,17 +47,17 @@ public class Venda {
     }
 
     /**
-     * @return the nomeProduto
+     * @return the idProduto
      */
-    public String getNomeProduto() {
-        return nomeProduto;
+    public int getIdProduto() {
+        return idProduto;
     }
 
     /**
-     * @param nomeProduto the nomeProduto to set
+     * @param idProduto
      */
-    public void setNomeProduto(String nomeProduto) {
-        this.nomeProduto = nomeProduto;
+    public void setIdProduto(int idProduto) {
+        this.idProduto = idProduto;
     }
 
     /**

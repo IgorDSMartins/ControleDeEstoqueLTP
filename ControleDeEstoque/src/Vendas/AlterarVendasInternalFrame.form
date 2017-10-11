@@ -155,14 +155,8 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabelFornecedor">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="jLabel6"/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabelProduto">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="jLabel7"/>
-      </Properties>
     </Component>
   </SubComponents>
 </Form>

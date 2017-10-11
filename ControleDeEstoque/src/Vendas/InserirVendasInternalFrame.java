@@ -5,11 +5,13 @@
  */
 package Vendas;
 
+import java.beans.PropertyVetoException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -74,13 +76,13 @@ public class InserirVendasInternalFrame extends javax.swing.JInternalFrame {
      }
     
     public void inserirVenda (Connection conn,Venda venda) {
-        String sql = "INSERT INTO venda (produto,fornecedor,quantidade) VALUES(?,?,?)";
+        String sql = "INSERT INTO venda (id_produto,fornecedor,quantidade) VALUES(?,?,?)";
  
         try {
                 PreparedStatement pstmt = conn.prepareStatement(sql); 
                 
                 //pstmt.setInt(1, venda.getCodigo());
-                pstmt.setString(1, venda.getNomeProduto());
+                pstmt.setInt(1, venda.getIdProduto());
                 pstmt.setString(2, venda.getFornecedor());
                 pstmt.setInt(3, venda.getQuantidade());
                 //pstmt.setInt(4, venda.getValorTotal());
@@ -92,6 +94,33 @@ public class InserirVendasInternalFrame extends javax.swing.JInternalFrame {
         }
     }
     
+    public void atualizaProduto (Connection conn,int cod,int qtd) {
+        String sql = "UPDATE produto SET quantidade = ?  WHERE codigo = ?";
+ 
+        try {
+                PreparedStatement pstmt = conn.prepareStatement(sql); 
+                
+                pstmt.setInt(1, qtd);
+                pstmt.setInt(2, cod);
+                
+                pstmt.executeUpdate();
+                
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    
+    public void mensagem (String mensagem) {
+        JOptionPane.showMessageDialog(null,mensagem);
+    } 
+    public void close(){
+        try {
+                this.setClosed(true);
+                } catch (PropertyVetoException ex) {
+                    System.err.println("Closing Exception");
+            }
+    }
      
     /**
      * This method is called from within the constructor to initialize the form.
@@ -147,17 +176,11 @@ public class InserirVendasInternalFrame extends javax.swing.JInternalFrame {
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel4.setText("Fornecedor:");
 
-        jLabelFornecedor.setText("jLabel5");
-
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel6.setText("Quantidade Disponível:");
 
-        jLabelQuantidadeDisponivel.setText("jLabel5");
-
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel5.setText("Nome:");
-
-        jLabelNome.setText("jLabel5");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -236,13 +259,21 @@ public class InserirVendasInternalFrame extends javax.swing.JInternalFrame {
 
     private void jButtonInserirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonInserirActionPerformed
         // TODO add your handling code here:
-
+        int cod = Integer.parseInt(jComboBoxProduto.getSelectedItem().toString());
         int quantidade = Integer.parseInt(jTextFieldQuantidade.getText());
-        
-        Venda venda =  new Venda(jLabelNome.getText(),
+        int disponivel = Integer.parseInt(jLabelQuantidadeDisponivel.getText());
+        Venda venda =  new Venda(cod,
                 jLabelFornecedor.getText(),quantidade);
         
-        inserirVenda(conn,venda);
+        if ((quantidade <= disponivel)) {
+            atualizaProduto(conn,cod,(disponivel-quantidade));
+            inserirVenda(conn,venda);
+            mensagem("Venda Registrada.");
+            close();
+        } else {
+            mensagem("Quantidade Indisponível.");
+        }
+        
     }//GEN-LAST:event_jButtonInserirActionPerformed
 
     private void jComboBoxProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxProdutoActionPerformed

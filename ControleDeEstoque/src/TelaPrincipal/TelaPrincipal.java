@@ -5,7 +5,6 @@ import Ajuda.SobreInternalFrame;
 import BancoDeDados.DBConnection;
 import Cadastro.CadastroFornecedorInternalFrame;
 import Cadastro.CadastroProdutoInternalFrame;
-import Consulta.ConsultaInternalFrame;
 import Produtos.AlterarProdutoInternalFrame;
 import Produtos.InserirProdutoInternalFrame;
 import Produtos.RemoverProdutoInternalFrame;
@@ -36,8 +35,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
         private CadastroFornecedorInternalFrame cadastroFornecedorInternalFrame;
         private CadastroProdutoInternalFrame cadastroProdutoInternalFrame;
         
-        private ConsultaInternalFrame consultaInternalFrame;
-        
         private InserirVendasInternalFrame inserirVendasInternalFrame;
         private AlterarVendasInternalFrame alterarVendasInternalFrame;
         private RemoverVendasInternalFrame removerVendasInternalFrame;
@@ -67,10 +64,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         
         DBConnection db = new DBConnection();
         this.conn = db.connect();
-        db.criarTabelas(conn);
-        
-        sobreInternalFrame = new SobreInternalFrame();       
-        consultaInternalFrame = new ConsultaInternalFrame();
+        db.criarTabelas(conn);     
           
     }
     /**
@@ -102,7 +96,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenuCadastro = new javax.swing.JMenu();
         jMenuCadastroFornecedor = new javax.swing.JMenuItem();
         jMenuCadastroProduto = new javax.swing.JMenuItem();
-        jMenuConsulta = new javax.swing.JMenu();
         jMenuVendas = new javax.swing.JMenu();
         jMenuVendasInserir = new javax.swing.JMenuItem();
         jMenuVendasAlterar = new javax.swing.JMenuItem();
@@ -153,14 +146,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenuCadastro.add(jMenuCadastroProduto);
 
         jMenuBar1.add(jMenuCadastro);
-
-        jMenuConsulta.setText("Consulta");
-        jMenuConsulta.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuConsultaActionPerformed(evt);
-            }
-        });
-        jMenuBar1.add(jMenuConsulta);
 
         jMenuVendas.setText("Vendas");
 
@@ -324,6 +309,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void jMenuAjudaSobreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuAjudaSobreActionPerformed
         // TODO add your handling code here:
+        sobreInternalFrame = new SobreInternalFrame();  
         TrocaDeTela(sobreInternalFrame);
     }//GEN-LAST:event_jMenuAjudaSobreActionPerformed
 
@@ -341,6 +327,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void jMenuHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuHomeActionPerformed
         // TODO add your handling code here:
+        
         TrocaDeTela(homeInternalFrame);
     }//GEN-LAST:event_jMenuHomeActionPerformed
 
@@ -349,11 +336,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
         alterarProdutoInternalFrame = new AlterarProdutoInternalFrame(conn);
         TrocaDeTela(alterarProdutoInternalFrame);
     }//GEN-LAST:event_jMenuProdutosAlterarActionPerformed
-
-    private void jMenuConsultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuConsultaActionPerformed
-        // TODO add your handling code here:
-        TrocaDeTela(consultaInternalFrame);
-    }//GEN-LAST:event_jMenuConsultaActionPerformed
 
     private void jMenuCadastroFornecedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuCadastroFornecedorActionPerformed
         // TODO add your handling code here:
@@ -416,7 +398,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenuCadastro;
     private javax.swing.JMenuItem jMenuCadastroFornecedor;
     private javax.swing.JMenuItem jMenuCadastroProduto;
-    private javax.swing.JMenu jMenuConsulta;
     private javax.swing.JMenu jMenuHome;
     private javax.swing.JMenu jMenuProdutos;
     private javax.swing.JMenuItem jMenuProdutosAlterar;

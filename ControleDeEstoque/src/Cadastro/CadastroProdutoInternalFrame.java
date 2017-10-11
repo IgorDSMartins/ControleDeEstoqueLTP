@@ -5,11 +5,13 @@
  */
 package Cadastro;
 
+import java.beans.PropertyVetoException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -60,8 +62,10 @@ public class CadastroProdutoInternalFrame extends javax.swing.JInternalFrame {
       * Método que cadastra o Produto no Banco de Dados
       * @param conn
       * @param produto 
+     * @return  
       */
-     public void cadastroProduto (Connection conn,Produto produto) {
+     public boolean cadastroProduto (Connection conn,Produto produto) {
+         
         String sql = "INSERT INTO produto VALUES(?,?,?,?,?)";
  
         try {
@@ -74,13 +78,23 @@ public class CadastroProdutoInternalFrame extends javax.swing.JInternalFrame {
                 pstmt.setInt(5, produto.getQuantidade());
                 
                 pstmt.executeUpdate();
-                
+                return true;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
+            return false;
         }
     }
     
-   
+   public void mensagem (String mensagem) {
+        JOptionPane.showMessageDialog(null,mensagem);
+    } 
+    public void close(){
+        try {
+                this.setClosed(true);
+                } catch (PropertyVetoException ex) {
+                    System.err.println("Closing Exception");
+            }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -224,7 +238,12 @@ public class CadastroProdutoInternalFrame extends javax.swing.JInternalFrame {
         Produto produto =  new Produto(cod,jTextFieldNome.getText(),
                 jComboBoxFornecedor.getSelectedItem().toString(),preco,quantidade);
         
-        cadastroProduto(conn,produto);
+        if(cadastroProduto(conn,produto)) {
+                mensagem("Produto Cadastrado com Sucesso.");
+                close();
+            } else {
+                mensagem("Dados Inválidos.");
+            }
     }//GEN-LAST:event_jButtonAdicionarActionPerformed
 
 

@@ -45,7 +45,7 @@ public class RelatoriosVendasInternalFrame extends javax.swing.JInternalFrame {
             
             while(rs.next()) {
                 
-                Venda venda = new Venda(rs.getInt("codigo"),rs.getString("produto"),
+                Venda venda = new Venda(rs.getInt("codigo"),rs.getInt("id_produto"),
                         rs.getString("fornecedor"),rs.getInt("quantidade"));
                 listaVendas.add(venda);
             }
@@ -64,7 +64,7 @@ public class RelatoriosVendasInternalFrame extends javax.swing.JInternalFrame {
         Object[] row = new Object[5];
         for (int i = 0; i < list.size(); i++) {
             row[0] = list.get(i).getCodigo();
-            row[1] = list.get(i).getNomeProduto();
+            row[1] = list.get(i).getIdProduto();
             row[2] = list.get(i).getFornecedor();
             row[3] = list.get(i).getQuantidade();
             row[4] = list.get(i).getValorTotal();
@@ -93,7 +93,7 @@ public class RelatoriosVendasInternalFrame extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Código", "Nome do Produto", "Fornecedor", "Quantidade"
+                "Código", "Id do Produto", "Fornecedor", "Quantidade"
             }
         ) {
             Class[] types = new Class [] {

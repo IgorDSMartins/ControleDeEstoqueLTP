@@ -5,11 +5,13 @@
  */
 package Vendas;
 
+import java.beans.PropertyVetoException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -56,7 +58,7 @@ public class RemoverVendasInternalFrame extends javax.swing.JInternalFrame {
     
      public void atualizaSelecao (Connection conn,int cod) {
          
-         String sql = "SELECT produto,fornecedor,quantidade "
+         String sql = "SELECT id_produto,fornecedor,quantidade "
                      + "FROM venda WHERE codigo = ?;";
         
         try {
@@ -68,7 +70,7 @@ public class RemoverVendasInternalFrame extends javax.swing.JInternalFrame {
             ResultSet rs  = pstmt.executeQuery();
             
             if (rs != null){
-                jLabelNome.setText(rs.getString("produto"));
+                jLabelNome.setText(rs.getString("id_produto"));
                 jLabelFornecedor.setText(rs.getString("fornecedor"));
                 jLabelQuantidade.setText(rs.getString("quantidade"));
             }           
@@ -99,6 +101,33 @@ public class RemoverVendasInternalFrame extends javax.swing.JInternalFrame {
         }
     }
 
+     public void atualizaProduto (Connection conn,int cod,int qtd) {
+        String sql = "UPDATE produto SET quantidade = quantidade + ?  WHERE codigo = ?";
+ 
+        try {
+                PreparedStatement pstmt = conn.prepareStatement(sql); 
+                
+                pstmt.setInt(1, qtd);
+                pstmt.setInt(2, cod);
+                
+                pstmt.executeUpdate();
+                
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    
+    public void mensagem (String mensagem) {
+        JOptionPane.showMessageDialog(null,mensagem);
+    } 
+    public void close(){
+        try {
+                this.setClosed(true);
+                } catch (PropertyVetoException ex) {
+                    System.err.println("Closing Exception");
+            }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -141,15 +170,9 @@ public class RemoverVendasInternalFrame extends javax.swing.JInternalFrame {
 
         jLabel5.setText("Nome:");
 
-        jLabelNome.setText("jLabel10");
-
-        jLabelFornecedor.setText("jLabel11");
-
         jLabel6.setText("Fornecedor:");
 
         jLabel7.setText("Quantidade");
-
-        jLabelQuantidade.setText("jLabel11");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -218,7 +241,12 @@ public class RemoverVendasInternalFrame extends javax.swing.JInternalFrame {
     private void jButtonRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRemoverActionPerformed
         // TODO add your handling code here:
         int cod = Integer.parseInt(jComboBoxVenda.getSelectedItem().toString());
+        int codProduto = Integer.parseInt(jLabelNome.getText());
+        int qtd = Integer.parseInt(jLabelQuantidade.getText());
+        atualizaProduto(conn,codProduto,qtd);
         removeVenda(conn,cod);
+        mensagem("Venda Removida.");
+        close();
     }//GEN-LAST:event_jButtonRemoverActionPerformed
 
     private void jComboBoxVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxVendaActionPerformed

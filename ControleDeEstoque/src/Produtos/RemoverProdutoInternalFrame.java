@@ -135,11 +135,7 @@ public class RemoverProdutoInternalFrame extends javax.swing.JInternalFrame {
 
         jLabel5.setText("Nome:");
 
-        jLabelNome.setText("jLabel10");
-
         jLabel6.setText("Fornecedor:");
-
-        jLabelFornecedor.setText("jLabel11");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

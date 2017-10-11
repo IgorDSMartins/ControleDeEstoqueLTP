@@ -154,10 +154,6 @@ public class InserirProdutoInternalFrame extends javax.swing.JInternalFrame {
 
         jLabel6.setText("Fornecedor:");
 
-        jLabelFornecedor.setText("jLabel11");
-
-        jLabelNome.setText("jLabel10");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(

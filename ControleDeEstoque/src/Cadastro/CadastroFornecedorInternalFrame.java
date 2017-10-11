@@ -5,9 +5,11 @@
  */
 package Cadastro;
 
+import java.beans.PropertyVetoException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -30,8 +32,13 @@ public class CadastroFornecedorInternalFrame extends javax.swing.JInternalFrame 
      * Método que cadastra um Fornecedor no Banco de Dados
      * @param conn
      * @param fornecedor 
+     * @return  
      */
-    public void cadastroFornecedor (Connection conn,Fornecedor fornecedor) {
+    public boolean cadastroFornecedor (Connection conn,Fornecedor fornecedor) {
+        
+        if(fornecedor.getCnpj().trim().equals("") || fornecedor.getNome().trim().equals("")){
+            return false;
+        }
         
         String sql = "INSERT INTO fornecedor VALUES(?,?)";
  
@@ -43,11 +50,23 @@ public class CadastroFornecedorInternalFrame extends javax.swing.JInternalFrame 
                 
                 pstmt.executeUpdate();
                 
+                return true;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
+            return false;
         }
     }
     
+    public void mensagem (String mensagem) {
+        JOptionPane.showMessageDialog(null,mensagem);
+    } 
+    public void close(){
+        try {
+                this.setClosed(true);
+                } catch (PropertyVetoException ex) {
+                    System.err.println("Closing Exception");
+            }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -141,7 +160,13 @@ public class CadastroFornecedorInternalFrame extends javax.swing.JInternalFrame 
             fornecedor.setCnpj(jTextFieldCNPJ.getText());
             fornecedor.setNome(jTextFieldNome.getText());
             
-            cadastroFornecedor(conn, fornecedor);
+            if(cadastroFornecedor(conn, fornecedor)) {
+                mensagem("Fornecedor Cadastrado com Sucesso.");
+                close();
+            } else {
+                mensagem("Dados Inválidos.");
+            }
+            
             
     }//GEN-LAST:event_jButtonAdicionarActionPerformed
 
